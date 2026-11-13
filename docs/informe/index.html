@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Informe de modernización · Valdora (demostrativo)</title>
+<style>
+:root{--navy:#0a1f33;--navy2:#16395c;--teal:#0d8a7c;--teal2:#12a594;--soft:#e8f6f4;--amber:#fff6e8;--red:#b42318;--ink:#16222f;--muted:#566476;--line:#dde4ec}
+*{box-sizing:border-box}body{margin:0;font:15px/1.55 "Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:#f3f6f9}
+.aviso{background:var(--amber);color:#6b4500;text-align:center;font-size:.85rem;padding:7px 16px;border-bottom:1px solid #f3dcb5}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:36px 0 30px}
+.c{width:min(100% - 32px,1100px);margin:auto}h1{margin:0 0 6px;font-size:1.9rem}header p{margin:0;color:#cfe0ee}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-22px auto 22px}
+.kpi{background:#fff;border:1px solid var(--line);border-top:3px solid var(--teal2);border-radius:12px;padding:16px 18px}
+.kpi b{display:block;font-size:1.7rem}.kpi span{color:var(--muted);font-size:.85rem}
+section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:18px}
+h2{margin:0 0 12px;font-size:1.1rem}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}.mal{color:var(--red);font-weight:700}.bien{color:var(--teal);font-weight:700}
+.barra{display:grid;grid-template-columns:150px 1fr 110px;gap:10px;align-items:center;margin:8px 0}.pista{background:#eef2f6;border-radius:99px;height:14px;overflow:hidden}
+.pista i{display:block;height:100%;border-radius:99px}.v1{background:#c0392b}.v2{background:var(--teal2)}
+footer{color:var(--muted);font-size:.85rem;text-align:center;padding:10px 0 28px}
+@media(max-width:760px){.kpis{grid-template-columns:1fr 1fr}.barra{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="aviso"><b>Proyecto demostrativo — desarrollo propio, no asociado a un cliente real.</b> Los defectos fueron introducidos a propósito y no corresponden a incidentes reales.</div>
+<header><div class="c"><h1>Informe de modernización del cotizador</h1><p>Valdora (empresa ficticia) · versión heredada v1 frente a versión modernizada v2 · generado el 2026-11-13</p></div></header>
+<div class="c">
+<div class="kpis">
+<div class="kpi"><span>Defectos corregidos</span><b>3 de 3</b></div>
+<div class="kpi"><span>Consultas al catálogo</span><b>10.000 → 400</b></div>
+<div class="kpi"><span>Tiempo por cotización</span><b>52,8 veces</b><span>más rápida</span></div>
+<div class="kpi"><span>Pruebas automatizadas</span><b>26</b></div>
+</div>
+<section><h2>Defectos encontrados y corregidos (valores calculados en esta ejecución)</h2>
+<table><thead><tr><th>Defecto</th><th>Caso</th><th>v1 heredada</th><th>v2 modernizada</th></tr></thead><tbody>
+<tr><td><b>D1</b> · trunca en vez de redondear</td><td>5 × filtro de aire ($12.990)</td><td class="mal">$77.290</td><td class="bien">$77.291</td></tr>
+<tr><td><b>D2</b> · descuento de cliente frecuente sobre el total</td><td>10 visitas, cliente frecuente y urgente</td><td class="mal">$1.139.960</td><td class="bien">$1.142.995</td></tr>
+<tr><td><b>D3</b> · SKU inexistente</td><td>«XXX-9999»</td><td class="mal">NullPointerException</td><td class="bien">No existe el producto «XXX-9999» en el catálogo.</td></tr>
+</tbody></table></section>
+<section><h2>Rendimiento con 5.000 líneas y 400 productos</h2>
+<div class="barra"><span>Tiempo v1</span><div class="pista"><i class="v1" style="width:100%"></i></div><b>55,1 ms</b></div>
+<div class="barra"><span>Tiempo v2</span><div class="pista"><i class="v2" style="width:1.9%"></i></div><b>1,0 ms</b></div>
+<div class="barra"><span>Consultas v1</span><div class="pista"><i class="v1" style="width:100%"></i></div><b>10.000</b></div>
+<div class="barra"><span>Consultas v2</span><div class="pista"><i class="v2" style="width:4.0%"></i></div><b>400</b></div>
+<p>Mismo neto: <b>sí</b> · mismo detalle: <b>sí</b> · diferencia en el total: <b>ninguna</b>.</p></section>
+<section><h2>Calidad del código</h2><table><tbody>
+<tr><td>Líneas del método principal</td><td class="mal">37</td><td class="bien">16</td></tr>
+<tr><td>Dinero</td><td class="mal">double (errores de redondeo)</td><td class="bien">Dinero (long, redondeo comercial)</td></tr>
+<tr><td>Reglas comerciales</td><td class="mal">números mágicos repartidos</td><td class="bien">ReglasComerciales con nombre</td></tr>
+<tr><td>Folio</td><td class="mal">contador estático, no seguro con varios hilos</td><td class="bien">GeneradorFolio con AtomicLong</td></tr>
+</tbody></table></section>
+</div>
+<footer>Java 21.0.8 · Windows 10 · medición real con Rendimiento.java · showcase-modernizacion-software</footer>
+</body>
+</html>
